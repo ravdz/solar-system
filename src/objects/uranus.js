@@ -1,34 +1,81 @@
 import * as THREE from "three";
 import gui from "../debug";
 
-// Texture
+/**
+ * Texture
+ */
 const textureLoader = new THREE.TextureLoader();
 const uranusColorTexture = textureLoader.load(
   "textures/uranus/uranus-color.jpeg"
 );
 
-// Object
+/**
+ * Params
+ */
+const loopTime = 1;
+const speed = 0.0000002;
+const orbitCurveParams = {
+  xRadius: 42.66,
+  yRadius: 42.66,
+};
+
+/**
+ * Objects
+ */
+
+// Orbit
+const orbitCurve = new THREE.EllipseCurve(
+  0,
+  0,
+  orbitCurveParams.xRadius,
+  orbitCurveParams.yRadius,
+  0,
+  2 * Math.PI
+);
+const orbitPoints = orbitCurve.getSpacedPoints(200);
+const orbitGeometry = new THREE.BufferGeometry().setFromPoints(orbitPoints);
+
+const orbitMaterial = new THREE.LineBasicMaterial({
+  color: 0xffffff,
+});
+
+const orbit = new THREE.Line(orbitGeometry, orbitMaterial);
+orbit.rotateX(-Math.PI / 2);
+orbit.name = "orbit";
+
+// Planet
 const uranusMaterial = new THREE.MeshStandardMaterial();
 uranusMaterial.map = uranusColorTexture;
-const uranus = new THREE.Mesh(
+const planetUranus = new THREE.Mesh(
   new THREE.SphereGeometry(2, 64, 64),
   uranusMaterial
 );
-uranus.position.x = -42.66;
+planetUranus.name = "planet";
 
-// Debug
+const uranusSystem = new THREE.Group();
+uranusSystem.add(planetUranus);
+uranusSystem.add(orbit);
+
+/**
+ * Debug
+ */
 const uranusFolder = gui.addFolder("Uranus");
 uranusFolder
-  .add(uranus.rotation, "x")
+  .add(planetUranus.rotation, "x")
   .name("rorate x")
   .min(0)
   .max(3.6)
   .step(0.1);
 uranusFolder
-  .add(uranus.rotation, "y")
+  .add(planetUranus.rotation, "y")
   .name("rorate y")
   .min(0)
   .max(3.6)
   .step(0.1);
 
-export default uranus;
+export default {
+  system: uranusSystem,
+  orbitCurve,
+  loopTime,
+  speed,
+};

@@ -77,14 +77,14 @@ controls.enableDamping = true;
  */
 scene.add(
   sun,
-  mercury,
-  venus,
+  mercury.system,
+  venus.system,
   earth.system,
-  mars,
-  jupiter,
-  saturn,
-  uranus,
-  neptune
+  mars.system,
+  jupiter.system,
+  saturn.system,
+  uranus.system,
+  neptune.system
 );
 
 /**
@@ -111,8 +111,28 @@ const tick = () => {
    * Update objects
    */
 
-  //Sun
-  sun.rotation.y = -0.1 * elapsedTime;
+  //Mercury system
+  const mercuryTime = mercury.speed * performance.now();
+  const mercuryOrbitPoint = (mercuryTime % mercury.loopTime) / mercury.loopTime;
+  // console.log(mercuryTime);
+  const mercuryPosVector = mercury.orbitCurve.getPoint(mercuryOrbitPoint);
+  const planetMercury = mercury.system.children.find(
+    (item) => item.name === "planet"
+  );
+  planetMercury.position.x = mercuryPosVector.x;
+  planetMercury.position.z = mercuryPosVector.y * -1;
+  planetMercury.rotation.y = 0.1 * elapsedTime;
+
+  //Venus system
+  const venusTime = venus.speed * performance.now();
+  const venusOrbitPoint = (venusTime % venus.loopTime) / venus.loopTime;
+  const venusPosVector = venus.orbitCurve.getPoint(venusOrbitPoint);
+  const planetVenus = venus.system.children.find(
+    (item) => item.name === "planet"
+  );
+  planetVenus.position.x = venusPosVector.x;
+  planetVenus.position.z = venusPosVector.y * -1;
+  planetVenus.rotation.y = 0.1 * elapsedTime;
 
   //Earth system
   const earthTime = earth.speed * performance.now();
@@ -122,7 +142,63 @@ const tick = () => {
     (item) => item.name === "planet"
   );
   planetEarth.position.x = earthPosVector.x;
-  planetEarth.position.z = earthPosVector.y;
+  planetEarth.position.z = earthPosVector.y * -1;
+  planetEarth.rotation.y = 0.1 * elapsedTime;
+
+  //Mars system
+  const marsTime = mars.speed * performance.now();
+  const marsOrbitPoint = (marsTime % mars.loopTime) / mars.loopTime;
+  const marsPosVector = mars.orbitCurve.getPoint(marsOrbitPoint);
+  const planetMars = mars.system.children.find(
+    (item) => item.name === "planet"
+  );
+  planetMars.position.x = marsPosVector.x;
+  planetMars.position.z = marsPosVector.y * -1;
+  planetMars.rotation.y = 0.1 * elapsedTime;
+
+  //Jupiter system
+  const jupiterTime = jupiter.speed * performance.now();
+  const jupiterOrbitPoint = (jupiterTime % jupiter.loopTime) / jupiter.loopTime;
+  const jupiterPosVector = jupiter.orbitCurve.getPoint(jupiterOrbitPoint);
+  const planetJupiter = jupiter.system.children.find(
+    (item) => item.name === "planet"
+  );
+  planetJupiter.position.x = jupiterPosVector.x;
+  planetJupiter.position.z = jupiterPosVector.y * -1;
+  planetJupiter.rotation.y = 0.1 * elapsedTime;
+
+  //Saturn system
+  const saturnTime = saturn.speed * performance.now();
+  const saturnOrbitPoint = (saturnTime % saturn.loopTime) / saturn.loopTime;
+  const saturnPosVector = saturn.orbitCurve.getPoint(saturnOrbitPoint);
+  const planetSaturn = saturn.system.children.find(
+    (item) => item.name === "planet"
+  );
+  planetSaturn.position.x = saturnPosVector.x;
+  planetSaturn.position.z = saturnPosVector.y * -1;
+  planetSaturn.rotation.y = 0.1 * elapsedTime;
+
+  //Uranus system
+  const uranusTime = uranus.speed * performance.now();
+  const uranusOrbitPoint = (uranusTime % uranus.loopTime) / uranus.loopTime;
+  const uranusPosVector = uranus.orbitCurve.getPoint(uranusOrbitPoint);
+  const planetUranus = uranus.system.children.find(
+    (item) => item.name === "planet"
+  );
+  planetUranus.position.x = uranusPosVector.x;
+  planetUranus.position.z = uranusPosVector.y * -1;
+  planetUranus.rotation.y = 0.1 * elapsedTime;
+
+  //Neptune system
+  const naptuneTime = neptune.speed * performance.now();
+  const naptuneOrbitPoint = (naptuneTime % neptune.loopTime) / neptune.loopTime;
+  const neptunePosVector = neptune.orbitCurve.getPoint(naptuneOrbitPoint);
+  const planetNeptune = neptune.system.children.find(
+    (item) => item.name === "planet"
+  );
+  planetNeptune.position.x = neptunePosVector.x;
+  planetNeptune.position.z = neptunePosVector.y * -1;
+  planetNeptune.rotation.y = 0.1 * elapsedTime;
 
   // Update controls
   controls.update();

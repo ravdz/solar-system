@@ -1,34 +1,81 @@
 import * as THREE from "three";
 import gui from "../debug";
 
-// Texture
+/**
+ * Texture
+ */
 const textureLoader = new THREE.TextureLoader();
 const jupiterColorTexture = textureLoader.load(
   "textures/jupiter/jupiter-color.jpeg"
 );
 
-// Object
+/**
+ * Params
+ */
+const loopTime = 1;
+const speed = 0.000001;
+const orbitCurveParams = {
+  xRadius: 26.66,
+  yRadius: 26.66,
+};
+
+/**
+ * Objects
+ */
+
+// Orbit
+const orbitCurve = new THREE.EllipseCurve(
+  0,
+  0,
+  orbitCurveParams.xRadius,
+  orbitCurveParams.yRadius,
+  0,
+  2 * Math.PI
+);
+const orbitPoints = orbitCurve.getSpacedPoints(200);
+const orbitGeometry = new THREE.BufferGeometry().setFromPoints(orbitPoints);
+
+const orbitMaterial = new THREE.LineBasicMaterial({
+  color: 0xffffff,
+});
+
+const orbit = new THREE.Line(orbitGeometry, orbitMaterial);
+orbit.rotateX(-Math.PI / 2);
+orbit.name = "orbit";
+
+// Planet
 const jupiterMaterial = new THREE.MeshStandardMaterial();
 jupiterMaterial.map = jupiterColorTexture;
-const jupiter = new THREE.Mesh(
+const planetJupiter = new THREE.Mesh(
   new THREE.SphereGeometry(4, 64, 64),
   jupiterMaterial
 );
-jupiter.position.x = -26.66;
+planetJupiter.name = "planet";
 
-// Debug
+const jupiterSystem = new THREE.Group();
+jupiterSystem.add(planetJupiter);
+jupiterSystem.add(orbit);
+
+/**
+ * Debug
+ */
 const jupiterFolder = gui.addFolder("Jupiter");
 jupiterFolder
-  .add(jupiter.rotation, "x")
+  .add(planetJupiter.rotation, "x")
   .name("rorate x")
   .min(0)
   .max(3.6)
   .step(0.1);
 jupiterFolder
-  .add(jupiter.rotation, "y")
+  .add(planetJupiter.rotation, "y")
   .name("rorate y")
   .min(0)
   .max(3.6)
   .step(0.1);
 
-export default jupiter;
+export default {
+  system: jupiterSystem,
+  orbitCurve,
+  loopTime,
+  speed,
+};

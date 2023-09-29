@@ -49,10 +49,9 @@ const saturnRingsGeometry = setSaturnRingsGeometry(
 );
 
 const saturnRings = new THREE.Mesh(saturnRingsGeometry, saturnRingsMaterial);
-saturnRings.rotation.x = 1.9;
+saturnRings.rotation.x = Math.PI / 2;
 
 // Debug
-// const saturnRingsFolder = saturnFolder.addFolder("Rings");
 const saturnRingsFolder = gui.addFolder("Saturn rings");
 saturnRingsFolder
   .add(saturnRingsGeometryParams, "innerRadius")

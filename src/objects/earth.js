@@ -8,15 +8,20 @@ const textureLoader = new THREE.TextureLoader();
 const earthColorTexture = textureLoader.load("textures/earth/earth-color.jpeg");
 
 /**
+ * Params
+ */
+const loopTime = 1;
+const speed = 0.00001;
+const orbitCurveParams = {
+  xRadius: 16.66,
+  yRadius: 16.66,
+};
+
+/**
  * Objects
  */
 
 // Orbit
-const orbitCurveParams = {
-  xRadius: 16.66,
-  yRadius: 21.8,
-};
-
 const orbitCurve = new THREE.EllipseCurve(
   0,
   0,
@@ -65,13 +70,6 @@ earthFolder
   .min(0)
   .max(3.6)
   .step(0.1);
-
-/**
- * Params
- */
-
-const loopTime = 1;
-const speed = 0.00001;
 
 export default {
   system: earthSystem,
