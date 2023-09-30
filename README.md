@@ -2,6 +2,12 @@
 
 Simple Three.js example.
 
+## Stack
+
+- three.js
+- lil-gui
+- vite
+
 ## Setup
 
 1. Install NPM packages
