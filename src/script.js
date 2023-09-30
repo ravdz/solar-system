@@ -114,7 +114,7 @@ const tick = () => {
   //Mercury system
   const mercuryTime = mercury.speed * performance.now();
   const mercuryOrbitPoint = (mercuryTime % mercury.loopTime) / mercury.loopTime;
-  // console.log(mercuryTime);
+
   const mercuryPosVector = mercury.orbitCurve.getPoint(mercuryOrbitPoint);
   const planetMercury = mercury.system.children.find(
     (item) => item.name === "planet"

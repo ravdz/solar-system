@@ -34,7 +34,8 @@ const orbitPoints = orbitCurve.getSpacedPoints(200);
 const orbitGeometry = new THREE.BufferGeometry().setFromPoints(orbitPoints);
 
 const orbitMaterial = new THREE.LineBasicMaterial({
-  color: 0xffffff,
+  transparent: false,
+  opacity: 0,
 });
 
 const orbit = new THREE.Line(orbitGeometry, orbitMaterial);
@@ -60,16 +61,20 @@ earthSystem.add(orbit);
 const earthFolder = gui.addFolder("Earth");
 earthFolder
   .add(planetEarth.rotation, "x")
-  .name("rorate x")
+  .name("rotate x")
   .min(0)
   .max(3.6)
   .step(0.1);
 earthFolder
-  .add(planetEarth.rotation, "y")
-  .name("rorate y")
-  .min(0)
-  .max(3.6)
-  .step(0.1);
+  .add(orbitMaterial, "transparent")
+  .name("hide orbit")
+  .onChange((value) => {
+    const newMaterial = new THREE.LineBasicMaterial({
+      transparent: value,
+      opacity: 0,
+    });
+    orbit.material = newMaterial;
+  });
 
 export default {
   system: earthSystem,

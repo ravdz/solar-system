@@ -94,13 +94,7 @@ saturnRingsFolder
   });
 saturnRingsFolder
   .add(saturnRings.rotation, "x")
-  .name("rorate x")
-  .min(0)
-  .max(3.6)
-  .step(0.1);
-saturnRingsFolder
-  .add(saturnRings.rotation, "y")
-  .name("rorate y")
+  .name("rotate x")
   .min(0)
   .max(3.6)
   .step(0.1);
