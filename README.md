@@ -19,3 +19,7 @@ Simple Three.js example.
    npm run dev
    ```
 
+## Debug
+
+Get access to debug panel by adding `#debug` at the end of the url.
+
